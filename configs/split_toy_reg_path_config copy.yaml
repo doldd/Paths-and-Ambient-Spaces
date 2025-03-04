@@ -1,0 +1,40 @@
+program: jax_sub_path_optim.py
+name: toy_path_permute
+method: grid
+metric:
+  goal: minimize
+  name: "Curve valid_loss"
+parameters:
+  curve_params:
+    parameters:
+      k:
+        values: [2, 4, 7, 10, 20]
+      model_kwargs:
+        parameters:
+          depth:
+            value: 3
+          width:
+            value: 16
+          activation:
+            values: ["relu", "elu",]
+      n_samples:
+        value: 20
+      lr:
+        value: 0.001
+      num_epochs:
+        value: 100_000
+      use_validation:
+        value: True
+      out_scale:
+        value: .05
+      optimize_distparams:
+        value: True
+      uniform_t_optimize:
+        value: True
+      bias_ascending_dnn:
+        values: [True,]
+  rng_seed:
+    values: [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+  dataset:
+    value: "generate"
+    

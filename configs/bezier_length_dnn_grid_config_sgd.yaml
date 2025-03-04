@@ -1,0 +1,31 @@
+program: bezier_length_dnn_grid.py
+name: length_large_training_sgd
+method: grid
+metric:
+  goal: minimize
+  name: bezier_length
+parameters:
+  curve_params:
+    parameters:
+      k: 
+        values: [2,5,10,40]
+      model_kwargs:
+        parameters:
+          depth:
+            value: 10
+          width:
+            value: 10
+          activation:
+            value: "elu"
+      n_samples:
+        value: 500
+      lr:
+        value: 0.05
+      num_epochs:
+        value: 600_000
+      weight_decay:
+        value: 0.
+      optim:
+        value: "sgd"
+  rng_seed:
+    values: [0, 1, 2, 3, 4, 5]

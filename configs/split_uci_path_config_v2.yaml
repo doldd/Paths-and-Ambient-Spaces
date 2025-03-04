@@ -1,0 +1,41 @@
+program: jax_sub_path_optim.py
+name: split_uci_optim_smoothness
+method: grid
+metric:
+  goal: minimize
+  name: "Curve valid_loss"
+parameters:
+  curve_params:
+    parameters:
+      k:
+        values: [20, 4, 2, 10]
+      model_kwargs:
+        parameters:
+          depth:
+            value: 3
+          width:
+            value: 16
+          activation:
+            # value: "relu"
+            values: ["relu", "elu"]
+      n_samples:
+        value: 10
+      lr:
+        value: 0.005
+      num_epochs:
+        value: 100_000
+      use_validation:
+        value: True
+      out_scale:
+        value: .05
+      optimize_distparams:
+        value: True
+      uniform_t_optimize:
+        value: True
+  rng_seed:
+    values: [3,4,0,1,2]
+  dataset:
+    # values: ['bikesharing', 'airfoil', 'concrete', 'energy', 'yacht']
+    value: 'yacht'
+  # generate, default, airfoil, concrete, energy, yacht
+    

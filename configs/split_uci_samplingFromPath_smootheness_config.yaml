@@ -1,0 +1,69 @@
+program: jax_sub_sampling_from_path.py
+name: split_uci_samplingFromPath
+method: grid
+metric:
+  goal: minimize
+  name: "r_hat_max"
+parameters:
+  curve_params:
+    parameters:
+      k:
+        value: 2
+      model_kwargs:
+        parameters:
+          depth:
+            value: 3
+          width:
+            value: 16
+          activation:
+            value: "relu"
+      n_samples:
+        value: 10
+      lr:
+        value: 0.005
+      num_epochs:
+        value: 100_000
+      use_validation:
+        value: True
+      out_scale:
+        value: .05
+      optimize_distparams:
+        value: True
+      uniform_t_optimize:
+        value: True
+  sampling:
+    parameters:
+      space_config:
+        values: 
+          - {space: "lambda",
+             prior_scale: 0.5,
+             tube_scale: 0.1,
+             epsilon: 25.0,
+             prior_correct: False }
+          - {space: "lambda",
+             prior_scale: 0.5,
+             tube_scale: 0.1,
+             epsilon: 25.0,
+             prior_correct: True}
+          - {space: "varphi",
+             prior_scale: 0.5}
+      num_chains:
+        value: 10
+      temperature:
+        values: [1.0, 2.154, 4.642, 10.0, 21.544, 46.416, 100.0, 215.443, 464.159,]
+      num_warmup:
+        value: 1000
+      num_draws:
+        value: 1000
+      sampler:
+        values: ["mclmc",]
+      num_forward_passes:
+        value: 100
+  rng_seed:
+    values: [0,1,2,3,4]
+  path_sweep_id:
+    value: "ddold/subspace_uci/1qeujmhy"
+  dataset:
+    value: 'airfoil'
+  # generate, default, airfoil, concrete, energy, yacht
+    

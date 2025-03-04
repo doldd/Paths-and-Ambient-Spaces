@@ -1,0 +1,31 @@
+program: bezier_length_dnn_grid.py
+name: length_large_with_grad_norm
+method: grid
+metric:
+  goal: minimize
+  name: bezier_length
+parameters:
+  curve_params:
+    parameters:
+      k: 
+        values: [80, 40, 20, 10, 5, 2]
+      model_kwargs:
+        parameters:
+          depth:
+            value: 10
+          width:
+            value: 10
+          activation:
+            value: "elu"
+      n_samples:
+        value: 20
+      lr:
+        value: 0.01
+      num_epochs:
+        value: 2_000_000
+      weight_decay:
+        values: [0.,]
+      optim:
+        value: "adam"
+  rng_seed:
+    values: [0, 1, 2, 3, 4, 5]
