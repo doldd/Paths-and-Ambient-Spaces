@@ -3,7 +3,7 @@
 
 ## Description
 
-This project is the source of the paper "Paths and Ambient Spaces in Neural Loss Landscapes," which analyzes various aspects of paths and ambient spaces in the loss landscape of neural networks. It includes several Jupyter notebooks and Python scripts for different experiments and analyses. All experiments were logged using a local Weights & Biases (wandb) instance, and log files can be provided upon request.
+This project is the source of the paper "Paths and Ambient Spaces in Neural Loss Landscapes," which analyzes various aspects of paths and ambient spaces in the loss landscape of neural networks. This repository includes several Jupyter notebooks and Python scripts for different experiments and analyses. All experiments were logged using a local Weights & Biases (wandb) instance, and log files can be provided upon request.
 
 ## Notable Files and Directories
 
