@@ -330,7 +330,6 @@ class SubspaceModel:
 
         """
         # Sample t param of Bezier curve
-
         t = random.uniform(key, (n_samples,), minval=0., maxval=1.)
         loss = self.nll(params, t, x, y).mean(-1)
         # jax.debug.print(f'loss shape: {loss.shape}')
@@ -470,6 +469,8 @@ class CategorySubspace(SubspaceModel):
 class UniformTCategory(CategorySubspace, UniformTSubspace):
     pass
 
+class UniformTReg(UniformTSubspace, SubspaceModel):
+    pass
 
 #@partial(jit, static_argnums=(1))
 def pytree_to_matrix(pytree, k):

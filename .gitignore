@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+wandb/
+proba_sandbox/
+figures/
+art_tmp/

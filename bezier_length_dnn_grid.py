@@ -91,6 +91,10 @@ def main():
     single_run(logger, config)
 
 class SubspaceModelGradNorm(SubspaceModel):
+    def __init__(self, model, k, n_samples=1, out_scale=0.05, optimize_distparams=False, uniform_t_optimize:bool=False):
+        self.uniform_t_optimize = uniform_t_optimize
+        super().__init__(model, k, n_samples, out_scale, optimize_distparams)
+
     @partial(jit, static_argnums=(0, 6))
     def train_step(self, key, params, x, y, opt_state, optimizer):
         """
@@ -108,8 +112,13 @@ class SubspaceModelGradNorm(SubspaceModel):
         - The loss, updated parameters, and updated optimizer state.
 
         """
+        if self.uniform_t_optimize:
+            loss_fn = self.compute_loss_natural_t
+        else:
+            loss_fn = self.compute_loss
+        # Compute the loss and gradients
         loss, grads = jax.value_and_grad(
-            self.compute_loss, argnums=(1,), )(key, params, x, y, self.n_samples)
+            loss_fn, argnums=(1,), )(key, params, x, y, self.n_samples)
         if self.optimize_distparams:
             updates, opt_state = optimizer.update(grads[0], opt_state, params)
             params = optax.apply_updates(params, updates)
@@ -207,9 +216,10 @@ def single_run(logger, config):
     rng_key, init_key = random.split(rng_key)
     model = MLPModel(**config['curve_params']['model_kwargs'])
     s_model = SubspaceModelGradNorm(
-        model, k, n_samples=config['curve_params']['n_samples'], 
+        model, k, n_samples=config['curve_params']['n_samples'],
         out_scale=0.05,
-        optimize_distparams=False)
+        optimize_distparams=False,
+        uniform_t_optimize=config['curve_params'].get('uniform_t_optimize', False))
     params = s_model.init_params(init_key, x)
 
     # Train
@@ -357,7 +367,6 @@ def single_run(logger, config):
     artifact.add_file(f'tmp_files/{logger.id}_params.npy')
     artifact.add_file(f'tmp_files/{logger.id}_best_params.npy')
     artifact.add_file(f'tmp_files/{logger.id}_data.npz')
-    artifact.add
     logger.log_artifact(artifact)
     wandb.finish()
 
@@ -371,7 +380,9 @@ if __name__ == "__main__":
     #                      'n_samples': 500,
     #                      'lr': 0.01,
     #                      'num_epochs': 10000,
-    #                      'weight_decay': 0.01,
+    #                      'weight_decay': 0,
+    #                      'uniform_t_optimize': 'True',
+    #                      'optim': 'sgd',
     #                      },
     #     'rng_seed': 0
     # }
