@@ -421,7 +421,6 @@ class UniformTSubspace(SubspaceModel):
 
         """
         # Sample t param of Bezier curve
-
         t = random.uniform(key, (n_samples,), minval=0., maxval=1.)
         loss = self.nll(params, t, x, y).mean(-1)
         # jax.debug.print(f'loss shape: {loss.shape}')
@@ -506,7 +505,7 @@ def pytree_to_vec(pytree):
 @jit
 def vec_to_single_pytree(vec, subspace_params):
     """
-    Converts a vector representation of parameters to a pytree structure with no loading dimension.
+    Converts a vector representation of parameters to a pytree structure with no leading dimension.
     opposite of pytree_to_vec function.
 
     Args:
