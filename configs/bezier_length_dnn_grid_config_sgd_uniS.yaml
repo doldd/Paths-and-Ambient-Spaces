@@ -8,7 +8,7 @@ parameters:
   curve_params:
     parameters:
       k: 
-        values: [2,5,10,40]
+        values: [2,5,10,20,40]
       model_kwargs:
         parameters:
           depth:
@@ -22,12 +22,12 @@ parameters:
       n_samples:
         value: 500
       lr:
-        value: 0.05
+        value: 0.005
       num_epochs:
-        value: 600_000
+        value: 1_500_000
       weight_decay:
-        value: 0.
+        values: [0., 0.01, 0.001]
       optim:
-        value: "sgd"
+        value: "adam"
   rng_seed:
     values: [0, 1, 2, 3, 4, 5]

@@ -376,13 +376,13 @@ if __name__ == "__main__":
     os.makedirs('tmp_files', exist_ok=True)
     # config = {
     #     'curve_params': {'k': 20,
-    #                      'model_kwargs': {'depth': 3, 'width': 10, 'activation': 'relu'},
+    #                      'model_kwargs': {'depth': 10, 'width': 10, 'activation': 'elu'},
     #                      'n_samples': 500,
     #                      'lr': 0.01,
-    #                      'num_epochs': 10000,
+    #                      'num_epochs': 1_000_000,
     #                      'weight_decay': 0,
     #                      'uniform_t_optimize': 'True',
-    #                      'optim': 'sgd',
+    #                      'optim': 'adam',
     #                      },
     #     'rng_seed': 0
     # }
